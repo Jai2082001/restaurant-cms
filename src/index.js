@@ -9,7 +9,12 @@ import HomePage from './routes/homepage';
 import Orders from './routes/orders';
 import Checkout from './routes/checkout';
 import { Provider } from 'react-redux';
+import AboutUs from './routes/aboutus';
 import store from './store/store';
+import Profile from './routes/profiles';
+import ContactUs from './routes/contactus';
+import Produts from './routes/products'
+import Products from './routes/products';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
   {
@@ -33,6 +38,22 @@ const router = createBrowserRouter([
       {
         path: "checkout",
         element: <Checkout></Checkout>
+      },
+      {
+        path: "profile",
+        element: <Profile></Profile>
+      },
+      {
+        path: 'aboutus',
+        element: <AboutUs></AboutUs>
+      },
+      {
+        path: 'contactus',
+        element:<ContactUs></ContactUs> 
+      },
+      {
+        path: 'products',
+        element: <Products></Products>
       }
     ]
   },

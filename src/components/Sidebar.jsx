@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { Moon, Sun, Menu, X, Home, ClipboardList, User, Gift, Search } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Moon, Sun, Menu, X, Home, ClipboardList, ShoppingCart, User, Gift, Search, CarTaxiFront } from 'lucide-react'
+import { Link } from 'react-router-dom';
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
     const navItems = [
@@ -8,6 +8,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       { icon: ClipboardList, text: 'Orders', path: '/orders' },
       { icon: User, text: 'Profile', path: '/profile' },
       { icon: Gift, text: 'Promotions', path: '/promotions' },
+      {icon: ShoppingCart, text: 'Cart', path: '/checkout'}
     ]
   
     return (

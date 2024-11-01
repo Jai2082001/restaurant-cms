@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   name: '',
-  email: '',
+  address: '',
 };
 
 const userSlice = createSlice({
@@ -10,9 +10,9 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     updateProfile(state, action) {
-      const { name, email } = action.payload;
+      const { name, address } = action.payload;
       state.name = name;
-      state.email = email;
+      state.address = address;
     },
   },
 });

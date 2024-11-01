@@ -2,10 +2,13 @@ import { Link, Outlet } from "react-router-dom";
 import { useState } from "react";
 import Sidebar from '../components/Sidebar'
 import Header from '../components/Header';
+import { useSelector } from "react-redux";
 export default function Root() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
     const [isDarkMode, setIsDarkMode] = useState(false)
 
+    const items  = useSelector(state=> state.cart)
+    console.log(items)
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen)
     const toggleDarkMode = () => setIsDarkMode(!isDarkMode)
 
