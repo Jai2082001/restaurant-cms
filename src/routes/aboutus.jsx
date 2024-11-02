@@ -40,7 +40,7 @@ const AboutUs = ({ productBanner }) => {
             <div>
               <p className="text-justify ft-14 fw-normal text-color-b94 mt-2 mb-3">
                 Morning Bakery Company Limited is one of the leading FMCP
-                companies in Bangladesh. In 2001, we started our journey with
+                companies in . In 2001, we started our journey with
                 our flagship outlet at GEC Circle, Chittagong.
               </p>
               <p className="text-justify ft-14 fw-normal text-color-b94 mt-2 mb-3">
@@ -55,7 +55,7 @@ const AboutUs = ({ productBanner }) => {
               </p>
               <p className="text-justify ft-14 fw-normal text-color-b94 mt-2 mb-3">
                 Currently, We are operating over 70 bakery outlets in major
-                cities like Dhaka, Chittagong, and Sylhet of Bangladesh. Serving
+                cities like Dhaka, Chittagong, and Sylhet of . Serving
                 local market with good reputation Morning Bakery and Beverage
                 Company Limited is also exporting different cookies and rusks in
                 Europe, USA, Middle East, and some Asian Countries.
@@ -84,7 +84,7 @@ const AboutUs = ({ productBanner }) => {
                 </h1>
                 <p className="text-center ft-14 fw-normal text-color-b94 min-height-150">
                   Morning bakery is one of the most prominent bakeries in
-                  Bangladesh. At Present, we have 30 outlets in Dhaka city and
+                 . At Present, we have 30 outlets in Dhaka city and
                   are ready to take your orders and provide you the best food
                   for your special days.
                 </p>
@@ -102,7 +102,6 @@ const AboutUs = ({ productBanner }) => {
                 </h1>
                 <p className="text-center ft-14 fw-normal text-color-b94 min-height-150">
                   We offer almost every food and beverage category in
-                  Bangladesh.
                 </p>
                 <Row>
                   <Col md={{ span: 8, offset: 4 }}>

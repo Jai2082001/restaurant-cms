@@ -13,8 +13,8 @@ import AboutUs from './routes/aboutus';
 import store from './store/store';
 import Profile from './routes/profiles';
 import ContactUs from './routes/contactus';
-import Produts from './routes/products'
 import Products from './routes/products';
+import Account from './routes/account'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
   {
@@ -27,10 +27,7 @@ const router = createBrowserRouter([
         index: true,
         element:<HomePage></HomePage>
       },
-      {
-        path: "contacts/:contactId",
-        element: <Contact></Contact>
-      },
+      
       {
         path: "orders",
         element: <Orders></Orders>
@@ -54,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: 'products',
         element: <Products></Products>
+      },
+      {
+        path: 'account',
+        element: <Account></Account>
       }
     ]
   },
@@ -67,4 +68,4 @@ root.render(
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+

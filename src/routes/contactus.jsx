@@ -57,7 +57,7 @@ const ContactUs = () => {
                   <FaHome size={19} />
                 </span>
                 <span className="text-color-b94 fw-normal">
-                  Kuwati Masjid Road,Dhaka-1212,Bangladesh
+           
                 </span>
               </h2>
             </div>
@@ -75,7 +75,7 @@ const ContactUs = () => {
                   <MdMailOutline size={19} />
                 </span>
                 <span className="text-color-b94 fw-normal">
-                  alamin.cse15@gmail.com
+         
                 </span>
               </h2>
             </div>
