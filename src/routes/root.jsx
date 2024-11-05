@@ -2,16 +2,37 @@ import { Link, Outlet } from "react-router-dom";
 import { useState } from "react";
 import Sidebar from '../components/Sidebar'
 import Header from '../components/Header';
-import { useSelector } from "react-redux";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCart } from "../store/slices/cartSlices";
+import { checkAuthStatus } from "../store/slices/userSlices";
 export default function Root() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
     const [isDarkMode, setIsDarkMode] = useState(false)
+    const dispatch=useDispatch();
+    const { isAuthenticated, user, status, error } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+      dispatch(checkAuthStatus());
+        dispatch(fetchCart())
+    }, [dispatch]);
+
+
+    console.log({
+        "isAuthenticated": isAuthenticated,
+        "user": user,
+        "status": status,
+        "error": error
+    })
+
 
     const items = useSelector(state => state.cart)
-    console.log(items)
+    console.log("items", items)
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen)
     const toggleDarkMode = () => setIsDarkMode(!isDarkMode)
+
+
 
     return (
         <>

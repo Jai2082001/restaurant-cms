@@ -30,6 +30,18 @@ export const registerUser = createAsyncThunk(
   }
 );
 
+export const checkAuthStatus = createAsyncThunk(
+  'auth/checkAuthStatus',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/user/check-auth', { withCredentials: true });
+      return response.data; // Expect user data if authenticated
+    } catch (error) {
+      return rejectWithValue('Not authenticated');
+    }
+  }
+);
+
 
 
 export const authSlice = createSlice({
@@ -72,7 +84,22 @@ export const authSlice = createSlice({
       .addCase(registerUser.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload || 'Failed to register';
+      }) .addCase(checkAuthStatus.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(checkAuthStatus.fulfilled, (state, action) => {
+        state.isAuthenticated = true; // Set based on successful check
+        state.user = action.payload.user; // Get user data from response
+        state.status = 'succeeded';
+      })
+      .addCase(checkAuthStatus.rejected, (state) => {
+        state.isAuthenticated = false; // Set false if not authenticated
+        state.user = null; // Clear user data
+        state.status = 'failed';
+        state.error = 'Not authenticated'; // Clear the error message
       });
+
   },
 });
 

@@ -8,11 +8,16 @@ const Account = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isRegistering, setIsRegistering] = useState(false);
-  const { status, error } = useSelector((state) => state.auth);
+  const { status, error, isAuthenticated } = useSelector((state) => state.auth);
+
+  const handleGoogleLogin = ()=>{
+    window.location.href = 'http://localhost:5000/auth/google';
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,7 +40,7 @@ const Account = () => {
       dispatch(loginUser({ email, password })).then((result) => {
         if (result.type === 'auth/loginUser/fulfilled') {
           alert('Logged in successfully!');
-          navigate('/dashboard'); // Redirect to a secured page
+          navigate('/'); // Redirect to a secured page
         }
       });
     }
@@ -101,6 +106,8 @@ const Account = () => {
         >
           {isRegistering ? 'Register' : 'Log In'}
         </button>
+        <button onClick={handleGoogleLogin} className="w-full mt-2 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition-colors">Login with Google</button>
+
 
         <div className="mt-4 text-center">
           <button

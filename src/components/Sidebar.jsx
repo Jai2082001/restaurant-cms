@@ -8,7 +8,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       { icon: ClipboardList, text: 'Orders', path: '/orders' },
       { icon: User, text: 'Profile', path: '/account' },
       { icon: Gift, text: 'Promotions', path: '/promotions' },
-      {icon: ShoppingCart, text: 'Cart', path: '/checkout'},
+      {icon: ShoppingCart, text: 'Cart', path: '/cart'},
       {icon: Contact, text: 'Contact us', path: '/contactus'},
       {icon: FileStack, text: 'About us', path: '/aboutus'}
     ]
