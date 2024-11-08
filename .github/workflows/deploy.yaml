@@ -1,16 +1,17 @@
-name: CI/CD Pipeline
+name: CI/CD Pipeline with Tests and Deployment
 
-# This workflow will be triggered when changes are pushed to the 'main' branch
 on:
   push:
+    branches:
+      - main  # Trigger only on push to the main branch
+  pull_request:
     branches:
       - main
 
 jobs:
-  # Test job to run your tests
+  # Run tests job
   test:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -18,30 +19,26 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'  # or any Node version you're using
+          node-version: '16'  # Set your Node.js version
 
       - name: Install dependencies
         run: npm install
 
       - name: Run tests
-        run: npm test --if-present  # This will run your test script
+        run: npm test  # Adjust this command if you're using a different testing framework
 
-  # Deployment job to Vercel (triggered only if tests pass)
+  # Deploy to Netlify only if tests pass
   deploy:
-    needs: test  # This job will run after the 'test' job successfully completes
     runs-on: ubuntu-latest
-    if: success()  
-
+    needs: test  # Ensure the test job must pass before this job runs
+    if: success()  # Only run this job if the test job succeeds
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Vercel CLI
-        run: npm install -g vercel
-
-      - name: Deploy to Vercel
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}  # Store your Vercel token in GitHub Secrets
-        run: |
-            echo "HELLOWORLD"
-            echo "Y" | vercel --prod --token $VERCEL_TOKEN
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v1
+        with:
+          netlify_token: ${{ secrets.NETLIFY_TOKEN }}  # Netlify access token from secrets
+          site_id: ${{ secrets.NETLIFY_SITE_ID }}     # Netlify site ID from secrets
+          dir: ./build  # Path to your build directory (adjust if necessary)
