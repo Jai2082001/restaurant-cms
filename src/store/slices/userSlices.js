@@ -7,7 +7,7 @@ export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/user/login', { email, password }, { withCredentials: true });
+      const response = await axios.post(`${process.env.REACT_APP_FETCH_LINK}/api/user/login`, { email, password }, { withCredentials: true });
       console.log(response)
       return response.data; // Expect user data only, token stored as HttpOnly cookie
     } catch (error) {
@@ -22,7 +22,7 @@ export const registerUser = createAsyncThunk(
   'auth/registerUser',
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/user/register', { email, password });
+      const response = await axios.post(`${process.env.REACT_APP_FETCH_LINK}/api/user/register`, { email, password });
       return response.data; // Expect success response
     } catch (error) {
       return rejectWithValue("Cannot register user");
@@ -34,7 +34,7 @@ export const checkAuthStatus = createAsyncThunk(
   'auth/checkAuthStatus',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get('http://localhost:5000/api/user/check-auth', { withCredentials: true });
+      const response = await axios.get(`${process.env.REACT_APP_FETCH_LINK}/api/user/check-auth`, { withCredentials: true });
       return response.data; // Expect user data if authenticated
     } catch (error) {
       return rejectWithValue('Not authenticated');

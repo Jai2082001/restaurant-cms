@@ -20,7 +20,7 @@ const Checkout = () => {
   const [address, setAddress] = useState(false);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/addresses', { withCredentials: true }).then((response) => {
+    axios.get(`${process.env.REACT_APP_FETCH_LINK}/api/addresses`, { withCredentials: true }).then((response) => {
       setAddresses(response.data);
       if (addresses && addresses.length > 0) {
         setAddress(addresses[0].id);

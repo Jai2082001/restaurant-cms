@@ -1,126 +1,63 @@
-// src/components/Login.js
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginUser, registerUser } from '../store/slices/userSlices';
-import { useNavigate } from 'react-router-dom';
+import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import Account from './Login'; // Adjust path if necessary
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import rootReducer from '../store'; // Import your root reducer
 
-const Account = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  
-  
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [isRegistering, setIsRegistering] = useState(false);
-  const { status, error, isAuthenticated } = useSelector((state) => state.auth);
+// Create a mock Redux store
+const store = createStore(rootReducer);
 
-  const handleGoogleLogin = ()=>{
-    window.location.href = 'http://localhost:5000/auth/google';
-  }
+describe('Account Component', () => {
+  test('renders the login form', () => {
+    render(
+      <Provider store={store}>
+        <Account />
+      </Provider>
+    );
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    // Check if the email, password, and login button are rendered
+    expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /log in/i })).toBeInTheDocument();
+  });
 
-    if (isRegistering) {
-      // Dispatch registerUser for registration
-      if (password !== confirmPassword) {
-        alert('Passwords do not match');
-        return;
-      }
-      
-      dispatch(registerUser({ email, password })).then((result) => {
-        if (result.type === 'auth/registerUser/fulfilled') {
-          alert('Registration successful! Please log in.');
-          setIsRegistering(false); // Switch to login form after successful registration
-        }
-      });
-    } else {
-      // Dispatch loginUser for login
-      dispatch(loginUser({ email, password })).then((result) => {
-        if (result.type === 'auth/loginUser/fulfilled') {
-          alert('Logged in successfully!');
-          navigate('/'); // Redirect to a secured page
-        }
-      });
-    }
-  };
+  test('should handle form input and submit for login', () => {
+    render(
+      <Provider store={store}>
+        <Account />
+      </Provider>
+    );
 
-  return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <form onSubmit={handleSubmit} className="p-8 bg-white shadow-md rounded-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">{isRegistering ? 'Register' : 'Login'}</h2>
-        {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
-        {status === 'loading' && <p className="text-blue-500 mb-4 text-center">Loading...</p>}
+    // Fill in the login form
+    fireEvent.change(screen.getByLabelText(/email/i), { target: { value: 'test@example.com' } });
+    fireEvent.change(screen.getByLabelText(/password/i), { target: { value: 'password123' } });
 
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter your email"
-          />
-        </div>
+    // Submit the form
+    fireEvent.click(screen.getByRole('button', { name: /log in/i }));
 
-        <div className="mb-6">
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-            Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter your password"
-          />
-        </div>
+    // Check if the login action is dispatched (you can mock redux dispatch or check for certain effects)
+    // This test just ensures the submit button works for login.
+    expect(screen.getByRole('button', { name: /log in/i })).toBeDisabled();
+  });
 
-        {isRegistering && (
-          <div className="mb-6">
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-              className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-        )}
+  test('should toggle between login and register', () => {
+    render(
+      <Provider store={store}>
+        <Account />
+      </Provider>
+    );
 
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition-colors"
-        >
-          {isRegistering ? 'Register' : 'Log In'}
-        </button>
-        <button onClick={handleGoogleLogin} className="w-full mt-2 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition-colors">Login with Google</button>
+    // Click to toggle from login to register
+    fireEvent.click(screen.getByRole('button', { name: /need an account\? register/i }));
 
+    // Check if the confirm password input appears for registration
+    expect(screen.getByLabelText(/confirm password/i)).toBeInTheDocument();
 
-        <div className="mt-4 text-center">
-          <button
-            type="button"
-            onClick={() => setIsRegistering(!isRegistering)} // Toggle between login and register
-            className="text-blue-500 hover:underline"
-          >
-            {isRegistering ? 'Already have an account? Log In' : 'Need an account? Register'}
-          </button>
-        </div>
-      </form>
-    </div>
-  );
-};
+    // Toggle back to login
+    fireEvent.click(screen.getByRole('button', { name: /already have an account\? log in/i }));
 
-export default Account;
+    // Ensure the confirm password input is removed and we're back to the login form
+    expect(screen.queryByLabelText(/confirm password/i)).not.toBeInTheDocument();
+  });
+});

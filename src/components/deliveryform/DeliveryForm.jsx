@@ -23,7 +23,7 @@ const DeliveryForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          const response = await axios.post("http://localhost:5000/api/addresses", formData, {withCredentials: true});
+          const response = await axios.post(`${process.env.REACT_APP_FETCH_LINK}/api/addresses`, formData, {withCredentials: true});
           console.log("Address saved:", response.data);
           alert("Address saved successfully!");
           setFormData({

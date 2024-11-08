@@ -39,7 +39,7 @@ function Orders() {
 
     useEffect(() => {
         const fetchProducts = async () => {
-            const response = await axios.get('http://localhost:5000/api/products'); // Replace with your API endpoint
+            const response = await axios.get(`${process.env.REACT_APP_FETCH_LINK}/api/products`); // Replace with your API endpoint
             setProducts(response.data);
             setFilteredProducts(response.data);
             

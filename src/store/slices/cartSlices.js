@@ -7,7 +7,7 @@ const initialState = {
 };
 
 export const fetchCart = createAsyncThunk('cart/fetchCart', async () => {
-  const response = await fetch('http://localhost:5000/cart', {
+  const response = await fetch(`${process.env.REACT_APP_FETCH_LINK}/cart`, {
     method: 'GET',
     credentials: 'include', // Important to include cookies in the request
   });
@@ -21,7 +21,7 @@ export const fetchCart = createAsyncThunk('cart/fetchCart', async () => {
 export const updateCart = createAsyncThunk('cart/updateCart', async (_, {getState}) => {
   const state = getState();
   const cartData = state.cart;
-  const response = await fetch('http://localhost:5000/cart', {
+  const response = await fetch(`${process.env.REACT_APP_FETCH_LINK}/cart`, {
     method: 'POST',
     credentials: 'include', // Important to include cookies in the request
     headers: {
