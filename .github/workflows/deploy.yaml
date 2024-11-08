@@ -43,4 +43,5 @@ jobs:
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}  # Store your Vercel token in GitHub Secrets
         run: |
-          vercel --prod --token $VERCEL_TOKEN
+            echo "HELLOWORLD"
+            vercel --prod --token $VERCEL_TOKEN
