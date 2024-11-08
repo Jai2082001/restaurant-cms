@@ -1,12 +1,12 @@
 import { Link, Outlet } from "react-router-dom";
 import { useState } from "react";
-import Sidebar from '../components/Sidebar'
-import Header from '../components/Header';
+import Sidebar from '../components/Sidebar.jsx'
+import Header from '../components/Header.jsx';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCart } from "../store/slices/cartSlices";
-import { checkAuthStatus } from "../store/slices/userSlices";
+import { fetchCart } from "../store/slices/cartSlices.js";
+import { checkAuthStatus } from "../store/slices/userSlices.js";
 export default function Root() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
     const [isDarkMode, setIsDarkMode] = useState(false)

@@ -1,23 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import ErrorPage from './error-page';
-import Route from './routes/root'
-import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes';
+import ErrorPage from './error-page.jsx';
+import Route from './routes/root.jsx'
+import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes.jsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Contact from './routes/contacts';
-import HomePage from './routes/homepage';
-import Orders from './routes/orders';
-import Checkout from './routes/checkout';
+import Contact from './routes/contacts.jsx';
+import HomePage from './routes/homepage.jsx';
+import Orders from './routes/orders.jsx';
+import Checkout from './routes/checkout.jsx';
 import { Provider } from 'react-redux';
-import AboutUs from './routes/aboutus';
-import store from './store/store';
+import AboutUs from './routes/aboutus.jsx';
+import store from './store/store.js';
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import Profile from './routes/profiles';
-import ContactUs from './routes/contactus';
-import Products from './routes/products';
-import Cart from './routes/cart';
-import Account from './routes/account'
+import Profile from './routes/profiles.jsx';
+import ContactUs from './routes/contactus.jsx';
+import Products from './routes/products.jsx';
+import Cart from './routes/cart.jsx';
+import Account from './routes/account.jsx'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const initialOptions = {
   "client-id": "AV0X98BIlO_j12JEaefAuq_NPzggVj5mCFUMagBNQKXtTvTM_YgsMzwd5_HGZajg_thbZMcf5LKar2G-",
