@@ -40,5 +40,5 @@ jobs:
         uses: nwtgck/actions-netlify@v1
         with:
           netlify_token: ${{ secrets.NETLIFY_TOKEN }}  # Netlify access token from secrets
-          site_id: ${{ secrets.NETLIFY_SITE_ID }}     # Netlify site ID from secrets
+          site_id: ${{ secrets.SITE_ID }}     # Netlify site ID from secrets
           dir: ./build  # Path to your build directory (adjust if necessary)
