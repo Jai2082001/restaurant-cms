@@ -1,6 +1,7 @@
 import { Row, Col, Form, Card, Button } from "react-bootstrap";
 import { useState } from "react";
-import axios from 'axios'
+import axios from "axios";
+
 const DeliveryForm = () => {
     const [formData, setFormData] = useState({
         firstName: "",
@@ -13,6 +14,9 @@ const DeliveryForm = () => {
         email: "",
     });
 
+    const [errors, setErrors] = useState({});
+
+    // Handle input changes
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({
@@ -20,43 +24,63 @@ const DeliveryForm = () => {
             [name]: value,
         }));
     };
+
+    // Validation function
+    const validate = () => {
+        const newErrors = {};
+
+        if (!formData.firstName) newErrors.firstName = "First Name is required";
+        if (!formData.lastName) newErrors.lastName = "Last Name is required";
+        if (!formData.streetAddress) newErrors.streetAddress = "Street Address is required";
+        if (!formData.townCity) newErrors.townCity = "Town/City is required";
+        if (!formData.district) newErrors.district = "District is required";
+        if (!formData.phone) newErrors.phone = "Phone is required";
+        else if (!/^\d{10}$/.test(formData.phone)) newErrors.phone = "Phone number must be 10 digits";
+        if (!formData.zipCode) newErrors.zipCode = "Zip Code is required";
+        if (!formData.email) newErrors.email = "Email is required";
+        else if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(formData.email)) newErrors.email = "Enter a valid email";
+
+        setErrors(newErrors);
+
+        return Object.keys(newErrors).length === 0;
+    };
+
+    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!validate()) return;
+
         try {
-          const response = await axios.post(`${process.env.REACT_APP_FETCH_LINK}/api/addresses`, formData, {withCredentials: true});
-          console.log("Address saved:", response.data);
-          alert("Address saved successfully!");
-          setFormData({
-            firstName: "",
-            lastName: "",
-            streetAddress: "",
-            townCity: "",
-            district: "",
-            phone: "",
-            zipCode: "",
-            email: "",
-          });
-          window.location.reload();
-
+            const response = await axios.post(`${process.env.REACT_APP_FETCH_LINK}/api/addresses`, formData, { withCredentials: true });
+            console.log("Address saved:", response.data);
+            alert("Address saved successfully!");
+            setFormData({
+                firstName: "",
+                lastName: "",
+                streetAddress: "",
+                townCity: "",
+                district: "",
+                phone: "",
+                zipCode: "",
+                email: "",
+            });
+            setErrors({});
         } catch (error) {
-          console.error("Error saving address:", error);
-          alert("Failed to save address.");
-
+            console.error("Error saving address:", error);
+            alert("Failed to save address.");
         }
-      };
+    };
 
     return (
-
         <Col md="7">
             <Card className="rounded-0 border-0">
                 <Card.Body>
                     <Row className="py-2">
                         <Col md="12">
-                            <h4 className="ft-20 fw-bold text-justify">
-                                BILLING DETAILS
-                            </h4>
+                            <h4 className="ft-20 fw-bold text-justify">BILLING DETAILS</h4>
                         </Col>
                     </Row>
+                    {/* Form Fields with Validation Feedback */}
                     <Row className="mb-2">
                         <Col md="6">
                             <Form.Control
@@ -65,8 +89,11 @@ const DeliveryForm = () => {
                                 placeholder="First Name"
                                 value={formData.firstName}
                                 onChange={handleChange}
-                            // errorMessage={errorMessage("firstName")}
+                                isInvalid={!!errors.firstName}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.firstName}
+                            </Form.Control.Feedback>
                         </Col>
                         <Col md="6">
                             <Form.Control
@@ -75,8 +102,11 @@ const DeliveryForm = () => {
                                 placeholder="Last Name"
                                 value={formData.lastName}
                                 onChange={handleChange}
-                            // errorMessage={errorMessage("lastName")}
+                                isInvalid={!!errors.lastName}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.lastName}
+                            </Form.Control.Feedback>
                         </Col>
                     </Row>
                     <Row className="mb-2">
@@ -84,11 +114,14 @@ const DeliveryForm = () => {
                             <Form.Control
                                 name="streetAddress"
                                 type="text"
-                                placeholder="Street Addresses"
+                                placeholder="Street Address"
                                 value={formData.streetAddress}
                                 onChange={handleChange}
-                            // errorMessage={errorMessage("streetAddress")}
+                                isInvalid={!!errors.streetAddress}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.streetAddress}
+                            </Form.Control.Feedback>
                         </Col>
                     </Row>
                     <Row className="mb-2">
@@ -99,8 +132,11 @@ const DeliveryForm = () => {
                                 placeholder="Town/City"
                                 value={formData.townCity}
                                 onChange={handleChange}
-                            // errorMessage={errorMessage("townCity")}
+                                isInvalid={!!errors.townCity}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.townCity}
+                            </Form.Control.Feedback>
                         </Col>
                     </Row>
                     <Row className="mb-2">
@@ -111,8 +147,11 @@ const DeliveryForm = () => {
                                 placeholder="District"
                                 value={formData.district}
                                 onChange={handleChange}
-                            // errorMessage={errorMessage("district")}
+                                isInvalid={!!errors.district}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.district}
+                            </Form.Control.Feedback>
                         </Col>
                     </Row>
                     <Row className="mb-2">
@@ -123,8 +162,11 @@ const DeliveryForm = () => {
                                 placeholder="Phone"
                                 value={formData.phone}
                                 onChange={handleChange}
-                            // errorMessage={errorMessage("phone")}
+                                isInvalid={!!errors.phone}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.phone}
+                            </Form.Control.Feedback>
                         </Col>
                     </Row>
                     <Row className="mb-2">
@@ -135,30 +177,35 @@ const DeliveryForm = () => {
                                 placeholder="Zip Code"
                                 value={formData.zipCode}
                                 onChange={handleChange}
-                            // errorMessage={errorMessage("zipCode")}
+                                isInvalid={!!errors.zipCode}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.zipCode}
+                            </Form.Control.Feedback>
                         </Col>
                     </Row>
                     <Row className="mb-2">
                         <Col md="12">
                             <Form.Control
                                 name="email"
-                                type="text"
+                                type="email"
                                 placeholder="Email"
                                 value={formData.email}
                                 onChange={handleChange}
-                            // errorMessage={errorMessage("email")}
+                                isInvalid={!!errors.email}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.email}
+                            </Form.Control.Feedback>
                         </Col>
                     </Row>
-
                 </Card.Body>
             </Card>
-            <button onClick={handleSubmit} className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition duration-300 shadow-md">
+            <Button onClick={handleSubmit} className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition duration-300 shadow-md">
                 Save Address
-            </button>
+            </Button>
         </Col>
-    )
-}
+    );
+};
 
-export default DeliveryForm
+export default DeliveryForm;
