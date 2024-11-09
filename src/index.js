@@ -1,33 +1,85 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import ErrorPage from './error-page.jsx';
+import Route from './routes/root.jsx'
+import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes.jsx';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Contact from './routes/contacts.jsx';
+import HomePage from './routes/homepage.jsx';
+import Orders from './routes/orders.jsx';
+import Checkout from './routes/checkout.jsx';
+import { Provider } from 'react-redux';
+import AboutUs from './routes/aboutus.jsx';
+import store from './store/store.js';
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import Profile from './routes/profiles.jsx';
+import ContactUs from './routes/contactus.jsx';
+import Products from './routes/products.jsx';
+import Cart from './routes/cart.jsx';
+import Account from './routes/account.jsx'
+const root = ReactDOM.createRoot(document.getElementById('root'));
+const initialOptions = {
+  "client-id": "AV0X98BIlO_j12JEaefAuq_NPzggVj5mCFUMagBNQKXtTvTM_YgsMzwd5_HGZajg_thbZMcf5LKar2G-",
+  currency: "USD",
+  intent: "capture",
+};
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Route></Route>,
+    errorElement: <ErrorPage></ErrorPage>,
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
+    children: [
+      {
+        index: true,
+        element: <HomePage></HomePage>
+      },
 
-Coded by www.creative-tim.com
+      {
+        path: "orders",
+        element: <Orders></Orders>
+      },
+      {
+        path: "checkout",
+        element: <ProtectedRoutes Component={<Checkout></Checkout>}></ProtectedRoutes>
+      },
+      {
+        path: "profile",
+        element: <Profile></Profile>
+      },
+      {
+        path: 'aboutus',
+        element: <AboutUs></AboutUs>
+      },
+      {
+        path: 'contactus',
+        element: <ContactUs></ContactUs>
+      },
+      {
+        path: 'products',
+        element: <Products></Products>
+      },
+      {
+        path: 'cart',
+        element: <ProtectedRoutes Component={<Cart></Cart>}></ProtectedRoutes>
+      },
+      {
+        path: 'account',
+        element: <Account></Account>
+      }
+    ]
+  },
 
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-import React from "react";
-import { createRoot } from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
-import App from "App";
-
-// Material Dashboard 2 React Context Provider
-import { MaterialUIControllerProvider } from "context";
-
-const container = document.getElementById("app");
-const root = createRoot(container);
-
+]);
 root.render(
-  <BrowserRouter>
-    <MaterialUIControllerProvider>
-      <App />
-    </MaterialUIControllerProvider>
-  </BrowserRouter>
+  <PayPalScriptProvider options={initialOptions}>
+    <Provider store={store}>
+      <RouterProvider router={router}></RouterProvider>
+    </Provider>
+  </PayPalScriptProvider>
 );
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+
