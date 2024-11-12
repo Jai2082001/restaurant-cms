@@ -47,7 +47,7 @@ jobs:
       
       - name: Debug secrets
         run: |
-          echo "Netlify token: ${NETLIFY_TOKEN:+provided}"
+          echo ${{secrets.NETLIFY_TOKEN}}
           echo "Site ID: ${NETLIFY_SITE_ID:+provided}"
         env:
           NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
