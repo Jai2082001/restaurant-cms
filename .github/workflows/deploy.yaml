@@ -30,7 +30,7 @@ jobs:
   # Deploy to Netlify only if tests pass
   deploy:
     runs-on: ubuntu-latest
-    if: success()  # Only run if tests pass
+    needs: test
     steps:
       - name: Trigger Netlify Deployment
         run: curl -X POST -d {} https://api.netlify.com/build_hooks/6732e5118a62cd44b987e632
