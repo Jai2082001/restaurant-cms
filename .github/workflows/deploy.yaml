@@ -44,7 +44,15 @@ jobs:
 
       - name: Build project
         run: CI=false npm run build
-
+      
+      - name: Debug secrets
+        run: |
+          echo "Netlify token: ${NETLIFY_TOKEN:+provided}"
+          echo "Site ID: ${NETLIFY_SITE_ID:+provided}"
+        env:
+          NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1
         with:
