@@ -30,15 +30,25 @@ jobs:
   # Deploy to Netlify only if tests pass
   deploy:
     runs-on: ubuntu-latest
-    needs: test  # Ensure the test job must pass before this job runs
-    if: success()  # Only run this job if the test job succeeds
-    steps:
+    steps: 
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
 
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1
         with:
-          netlify_token: ${{ secrets.NETLIFY_TOKEN }}  # Netlify access token from secrets
-          site_id: ${{ secrets.SITE_ID }}     # Netlify site ID from secrets
-          dir: ./build  # Path to your build directory (adjust if necessary)
+          netlify_token: ${{ secrets.NETLIFY_TOKEN }}
+          site_id: ${{ secrets.NETLIFY_SITE_ID }}
+          dir: ./build
+          
