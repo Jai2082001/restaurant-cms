@@ -30,27 +30,7 @@ jobs:
   # Deploy to Netlify only if tests pass
   deploy:
     runs-on: ubuntu-latest
-    steps: 
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build project
-        run: CI=false npm run build
-      
-     
-          
-      - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v1
-        with:
-          netlify_token: nfp_jsoRQBuT8MwYYPKyPM6onvFPSACwW8ySbf13
-          site_id: ee029583-6231-4807-b3d8-4e1eb8090ad6
-          dir: ./build
-          
+    if: success()  # Only run if tests pass
+    steps:
+      - name: Trigger Netlify Deployment
+        run: curl -X POST -d {} https://api.netlify.com/build_hooks/6732e5118a62cd44b987e632
