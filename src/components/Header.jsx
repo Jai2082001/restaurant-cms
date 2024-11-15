@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { Moon, Sun, Menu, X, Home, ClipboardList, User, Gift, Search } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import main_logo from '../public/main_logo.jpg'
 
 const Header = ({ toggleSidebar, isDarkMode, toggleDarkMode }) => {
     return (
@@ -10,10 +11,16 @@ const Header = ({ toggleSidebar, isDarkMode, toggleDarkMode }) => {
             <button onClick={toggleSidebar} className="text-gray-600 dark:text-gray-300">
               <Menu size={24} />
             </button>
-            <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Gourmet Delights</h1>
+            <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
+              <img src={main_logo} height={100} width={220}></img>
+            </h1>
+            
+          </div>
+          <div>
+            
           </div>
           <div className="flex items-center space-x-4">
-            <div className="relative">
+            <div className="relative">  
               <input
                 type="text"
                 placeholder="Search..."

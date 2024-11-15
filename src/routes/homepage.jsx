@@ -1,5 +1,14 @@
 import { motion } from 'framer-motion'
 import {CustomImage as Image} from '../components/CustomImage'
+import { Carousel } from 'react-bootstrap'
+import { Container } from 'react-bootstrap/Container'
+import { Rows } from 'react-bootstrap/Row'
+import { Col } from 'react-bootstrap/Col'
+
+
+import slider1 from '../public/slider_image/slider1.jpg'
+import slider2 from '../public/slider_image/slider2.jpg'
+import slider3 from '../public/slider_image/slider3.jpg'
 
 const foodItems = [
   { name: 'Gourmet Burger', image: 'https://bite.ai/static/092566a027d081a7e19134c948fe93aa/0f3a1/full-breakfast.jpg', description: 'Juicy beef patty with artisanal toppings' },
@@ -8,28 +17,35 @@ const foodItems = [
   { name: 'Signature Cocktail', image: 'https://bite.ai/static/092566a027d081a7e19134c948fe93aa/0f3a1/full-breakfast.jpg', description: 'Handcrafted drinks for every occasion' },
 ]
 
+
+
 const MotionImage = motion(Image)
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
+        <Carousel data-bs-theme="dark">
+        <Carousel.Item>
+          <img className="d-block w-100" src={slider3}></img>
+          <Carousel.Caption>
+          </Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item>
+          <img className="d-block w-100" src={slider2}></img>
+        </Carousel.Item>
+        <Carousel.Item>
+          <img className="d-block w-100" src={slider1}></img>
+        </Carousel.Item>
+      </Carousel>
       <header className="py-16 text-center">
-        <motion.h1 
-          className="text-5xl font-bold mb-4 text-gray-800 dark:text-white"
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          Welcome to Gourmet Delights
-        </motion.h1>
-        <motion.p 
+        <motion.h2 
           className="text-xl text-gray-600 dark:text-gray-300"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.8 }}
         >
-          Experience culinary excellence
-        </motion.p>
+          Top Selling Products
+        </motion.h2>
       </header>
 
       <main className="container mx-auto px-4 py-8">
