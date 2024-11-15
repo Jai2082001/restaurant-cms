@@ -15,11 +15,13 @@ import Profile from './routes/profiles';
 import ContactUs from './routes/contactus';
 import Products from './routes/products';
 import Account from './routes/account'
+import SingleProductProductRoutePage from './routes/singleProductRoutePage';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Route></Route>,
+  
     errorElement: <ErrorPage></ErrorPage>,
 
     children: [
@@ -55,6 +57,10 @@ const router = createBrowserRouter([
       {
         path: 'account',
         element: <Account></Account>
+      },
+      {
+        path: 'singleProduct', 
+        element: <SingleProductProductRoutePage></SingleProductProductRoutePage>
       }
     ]
   },

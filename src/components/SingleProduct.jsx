@@ -1,16 +1,17 @@
+// Sample products array for demonstration. Replace with your actual product data or fetch it from an API.
 import { addToCart } from "../store/slices/cartSlices"
 import { useDispatch } from "react-redux";
-
+ 
 function SingleProduct ({product}) {
-
-    
+ 
+   
     const dispatch = useDispatch()
-    console.log(product)
-
+ 
     function pushToCart(){
-        dispatch(addToCart({}));
+        dispatch(addToCart({product}));
+        
     }
-
+ 
     return (
         <>
            <div className="max-w-sm mx-auto bg-white rounded-lg shadow-md overflow-hidden">
@@ -24,18 +25,18 @@ function SingleProduct ({product}) {
         <p className="text-gray-700 mb-2">{product.description}</p>
         <p className="text-lg font-bold text-blue-600 mb-4">${product.price}</p>
         <div className="flex justify-between">
-          <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200">
+          <button onClick={pushToCart} className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200">
             Add to Cart
           </button>
-          <button className="text-blue-500 hover:underline transition duration-200">
+          {/* <button className="text-blue-500 hover:underline transition duration-200">
             View Details
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
         </>
     )
 }
-
-
+ 
+ 
 export default SingleProduct
