@@ -5,10 +5,9 @@ import { Container } from 'react-bootstrap/Container'
 import { Rows } from 'react-bootstrap/Row'
 import { Col } from 'react-bootstrap/Col'
 
-
-import slider1 from '../public/slider_image/slider1.jpg'
-import slider2 from '../public/slider_image/slider2.jpg'
-import slider3 from '../public/slider_image/slider3.jpg'
+import slider1 from '../images/slider_image/slider1.jpg'
+import slider2 from '../images/slider_image/slider2.jpg'
+import slider3 from '../images/slider_image/slider3.jpg'
 
 const foodItems = [
   { name: 'Gourmet Burger', image: 'https://bite.ai/static/092566a027d081a7e19134c948fe93aa/0f3a1/full-breakfast.jpg', description: 'Juicy beef patty with artisanal toppings' },
@@ -16,8 +15,6 @@ const foodItems = [
   { name: 'Decadent Dessert', image: 'https://bite.ai/static/092566a027d081a7e19134c948fe93aa/0f3a1/full-breakfast.jpg', description: 'Sweet treats to satisfy your cravings' },
   { name: 'Signature Cocktail', image: 'https://bite.ai/static/092566a027d081a7e19134c948fe93aa/0f3a1/full-breakfast.jpg', description: 'Handcrafted drinks for every occasion' },
 ]
-
-
 
 const MotionImage = motion(Image)
 
@@ -38,14 +35,14 @@ export default function HomePage() {
         </Carousel.Item>
       </Carousel>
       <header className="py-16 text-center">
-        <motion.h2 
+        <motion.h5 
           className="text-xl text-gray-600 dark:text-gray-300"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.8 }}
         >
           Top Selling Products
-        </motion.h2>
+        </motion.h5>
       </header>
 
       <main className="container mx-auto px-4 py-8">

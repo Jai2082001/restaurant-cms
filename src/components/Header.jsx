@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { Moon, Sun, Menu, X, Home, ClipboardList, User, Gift, Search } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import main_logo from '../public/main_logo.jpg'
+import main_logo from '../images/main_logo.jpg'
 
 const Header = ({ toggleSidebar, isDarkMode, toggleDarkMode }) => {
     return (
