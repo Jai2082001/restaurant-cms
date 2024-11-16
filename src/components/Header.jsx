@@ -2,6 +2,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Moon, Sun, Menu, X, Home, ClipboardList, User, Gift, Search } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import main_logo from '../images/main_logo.jpg'
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+
 
 const Header = ({ toggleSidebar, isDarkMode, toggleDarkMode }) => {
     return (
@@ -12,12 +17,10 @@ const Header = ({ toggleSidebar, isDarkMode, toggleDarkMode }) => {
               <Menu size={24} />
             </button>
             <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
-              <img src={main_logo} height={100} width={220}></img>
+              <img src={main_logo} height={100} width={220} alt=""></img>
             </h1>
-            
           </div>
           <div>
-            
           </div>
           <div className="flex items-center space-x-4">
             <div className="relative">  
@@ -28,13 +31,39 @@ const Header = ({ toggleSidebar, isDarkMode, toggleDarkMode }) => {
               />
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
             </div>
+
+            <Navbar expand="lg" className="bg-body-white">
+              <Container>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                  <Nav className="me-auto">
+                    <Nav.Link href="#home">Home</Nav.Link>
+                    <Nav.Link href="#aboutus">About Us</Nav.Link>
+                    <Nav.Link href="#products">Products</Nav.Link>
+                    <Nav.Link href="#contactus">Contact Us</Nav.Link>
+                    <NavDropdown class="w-10 h-10 rounded-full" title="Account" id="basic-nav-dropdown">
+                      <NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
+                      <NavDropdown.Item href="#action/3.2">
+                        Orderts
+                      </NavDropdown.Item>
+                      <NavDropdown.Item href="#action/3.3">Cart</NavDropdown.Item>
+                      <NavDropdown.Divider />
+                      <NavDropdown.Item href="#action/3.4">
+                        Logoout
+                      </NavDropdown.Item>
+                    </NavDropdown>
+                  </Nav>
+                </Navbar.Collapse>
+              </Container>
+            </Navbar>
+
             <button
               onClick={toggleDarkMode}
               className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white"
             >
               {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
             </button>
-            <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
+            <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">G
             </div>
           </div>
         </div>
