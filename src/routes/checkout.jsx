@@ -11,6 +11,7 @@ import { BsCartX } from "react-icons/bs";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { useNavigate } from "react-router-dom";
 import SavedAddresses from "../components/SavedAddresses/SavedAddresses";
+
 const Checkout = () => {
 
   const cartItems = useSelector(state => state.cart.items)
@@ -18,6 +19,8 @@ const Checkout = () => {
   const [pickup, changePickup] = useState(true);
   const [addresses, setAddresses] = useState([]);
   const [address, setAddress] = useState(false);
+  const [status, changeStatus] = useState(false);
+
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_FETCH_LINK}/api/addresses`, { withCredentials: true }).then((response) => {
@@ -57,10 +60,23 @@ const Checkout = () => {
     });
   };
 
+  const checkoutHandler = async () => {
+    const response = axios.post(`${process.env.REACT_APP_FETCH_LINK}/checkout`, {
+      body: cartItems,
+
+    }, {
+      withCredentials: true, // Ensures cookies are sent and received
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    navigate('/account')
+
+  }
   const onApproveOrder = (data, actions) => {
     return actions.order.capture().then((details) => {
       const name = details.payer.name.given_name;
-      alert(`Transaction completed by ${name}`);
+      changeStatus(true)
     });
   };
 
@@ -284,12 +300,15 @@ const Checkout = () => {
                       <Row className="py-2 mb-2 px-3">
                         <Col md="12">
                           <Button
+                            disabled={!status}
                             variant="danger"
                             type="submit"
                             className="text-center w-100 rounded-0"
+                            onClick={checkoutHandler}
                           >
                             <span className="ft-13 fw-bold text-uppercase">
-                              proceed to checkout
+                              {!status && 'Complete the Payment to place order'}
+                              {status && 'Proceed to Checkout'}
                             </span>
                           </Button>
                         </Col>

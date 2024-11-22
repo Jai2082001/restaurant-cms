@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, registerUser } from '../store/slices/userSlices.js';
 import { useNavigate } from 'react-router-dom';
+import AccountPage from '../components/AccountLogged.jsx';
 
 const Account = () => {
   const dispatch = useDispatch();
@@ -46,8 +47,10 @@ const Account = () => {
     }
   };
 
-  return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
+
+  const AccountNotLogged =  () => {
+    return (
+      <div className="flex justify-center items-center h-screen bg-gray-100">
       <form onSubmit={handleSubmit} className="p-8 bg-white shadow-md rounded-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">{isRegistering ? 'Register' : 'Login'}</h2>
         {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
@@ -120,7 +123,17 @@ const Account = () => {
         </div>
       </form>
     </div>
+    )
+  }
+
+  return (
+    <>
+    {!isAuthenticated && <AccountNotLogged></AccountNotLogged>}
+    {isAuthenticated && <AccountPage></AccountPage>}   
+    </>
+    
   );
+
 };
 
 export default Account;

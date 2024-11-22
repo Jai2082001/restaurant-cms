@@ -18,6 +18,7 @@ import ContactUs from './routes/contactus.jsx';
 import Products from './routes/products.jsx';
 import Cart from './routes/cart.jsx';
 import Account from './routes/account.jsx'
+import SingleProductRoutePage from './routes/SingleProductRoute.jsx';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const initialOptions = {
   "client-id": "AV0X98BIlO_j12JEaefAuq_NPzggVj5mCFUMagBNQKXtTvTM_YgsMzwd5_HGZajg_thbZMcf5LKar2G-",
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
       {
         path: 'account',
         element: <Account></Account>
+      },
+      {
+        path: 'product/:details',
+        element: <SingleProductRoutePage></SingleProductRoutePage>
       }
     ]
   },

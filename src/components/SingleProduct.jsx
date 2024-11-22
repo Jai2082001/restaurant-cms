@@ -1,14 +1,26 @@
+import { useNavigate } from "react-router-dom";
 import { addToCart, updateCart } from "../store/slices/cartSlices"
-import { useDispatch } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import { NotificationManager } from "react-notifications";
 function SingleProduct ({product}) {
 
-    
+    const {isAuthenticated} = useSelector((state)=>state.auth)
     const dispatch = useDispatch()
-
+    const navigate = useNavigate();
+    
     function pushToCart(){
+      if(isAuthenticated){
         dispatch(addToCart({product}));
         dispatch(updateCart())
+        NotificationManager.info('Added to the Cart')
+      }else{
+        navigate('/account')
+      }
+        
+    }
+
+    function navigateSingle(){
+      navigate(`/product/${product._id}`)
     }
 
     return (
@@ -27,9 +39,9 @@ function SingleProduct ({product}) {
           <button onClick={pushToCart} className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200">
             Add to Cart
           </button>
-          {/* <button className="text-blue-500 hover:underline transition duration-200">
+          <button onClick={navigateSingle} className="text-blue-500 hover:underline transition duration-200">
             View Details
-          </button> */}
+          </button>
         </div>
       </div>
     </div>

@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion'
-import {CustomImage as Image} from '../components/CustomImage'
-
+import { CustomImage as Image } from '../components/CustomImage'
+import BannerCarousel from '../components/Carousel'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import HomeProductDisplay from '../components/HomeProductDisplay'
 const foodItems = [
   { name: 'Gourmet Burger', image: 'https://bite.ai/static/092566a027d081a7e19134c948fe93aa/0f3a1/full-breakfast.jpg', description: 'Juicy beef patty with artisanal toppings' },
   { name: 'Fresh Salad', image: 'https://bite.ai/static/092566a027d081a7e19134c948fe93aa/0f3a1/full-breakfast.jpg', description: 'Crisp greens with house-made dressing' },
@@ -8,21 +11,37 @@ const foodItems = [
   { name: 'Signature Cocktail', image: 'https://bite.ai/static/092566a027d081a7e19134c948fe93aa/0f3a1/full-breakfast.jpg', description: 'Handcrafted drinks for every occasion' },
 ]
 
-const MotionImage = motion(Image)
+
 
 export default function HomePage() {
+
+  const [site_info, changeSiteInfo] = useState(false);
+  const [product, changeProduct] = useState([]);
+
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_FETCH_LINK}/api/get_info`).then((response) => {
+      changeSiteInfo(response.data[0])
+    });
+
+    const MotionImage = motion(Image)
+
+
+
+  }, [])
+
+  console.log(product.length, product)
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
       <header className="py-16 text-center">
-        <motion.h1 
+        <motion.h1
           className="text-5xl font-bold mb-4 text-gray-800 dark:text-white"
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-           Gourmet Delights
+          {site_info && `${site_info.Name}`}
         </motion.h1>
-        <motion.p 
+        <motion.p
           className="text-xl text-gray-600 dark:text-gray-300"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -30,36 +49,20 @@ export default function HomePage() {
         >
           Experience culinary excellence
         </motion.p>
+        {site_info && <BannerCarousel images={site_info.BannerImages} ></BannerCarousel>}
+
       </header>
 
       <main className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {foodItems.map((item, index) => (
-            <motion.div 
-              key={item.name}
-              className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.2, duration: 0.8 }}
-            >
-              <MotionImage
-                src={item.image}
-                alt={item.name}
-                width={600}
-                height={400}
-                className="w-full h-64 object-cover"
-                // whileHover={{ scale: 1.05 }}
-                // transition={{ duration: 0.3 }}
-              />
-              <div className="p-6">
-                <h2 className="text-2xl font-bold mb-2 text-gray-800 dark:text-white">{item.name}</h2>
-                <p className="text-gray-600 dark:text-gray-300">{item.description}</p>
-              </div>
-            </motion.div>
-          ))}
+          {site_info && <>
+            {site_info.ProductDisplays.map((item, index) => (
+              <HomeProductDisplay id={item} index={index}></HomeProductDisplay>
+            ))}
+          </>}
         </div>
 
-        <motion.div 
+        <motion.div
           className="mt-16 text-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

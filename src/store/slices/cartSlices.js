@@ -42,7 +42,8 @@ const cartSlice = createSlice({
   reducers: {
     addToCart(state, action) {
       const newItem = action.payload;
-      const existingItem = state.items.find(item => item.id === newItem.id);
+      console.log(newItem)
+      const existingItem = state.items.find(item => item.product._id === newItem.product._id);
       if (existingItem) {
         existingItem.quantity++;
       } else {
@@ -51,8 +52,14 @@ const cartSlice = createSlice({
       state.totalQuantity++;
      // Call the async thunk here to update the backend
     },
+    updateTCart(state, action){
+      const newItem = action.payload;
+      const existingItem = state.items.find(item => item.product._id === newItem.item.product._id);
+      existingItem.quantity = existingItem.quantity + newItem.quantity ;
+    },
     removeFromCart(state, action) {
       const id = action.payload;
+      console.log(id)
       const existingItem = state.items.find(item => item.id === id);
       if (existingItem) {
         if (existingItem.quantity === 1) {
@@ -92,5 +99,5 @@ const cartSlice = createSlice({
   }
 });
 
-export const { addToCart, removeFromCart, clearCart, singleItemRemoveFromCart } = cartSlice.actions;
+export const { addToCart, updateTCart, removeFromCart, clearCart, singleItemRemoveFromCart } = cartSlice.actions;
 export default cartSlice.reducer;

@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Row, Col, Card, Button, Form } from "react-bootstrap";
 // import { addToCart, removeFromCart } from "../store/actions/cartActions"; // Replace with actual import path
-import { addToCart, removeFromCart, singleItemRemoveFromCart, updateCart } from "../store/slices/cartSlices";
+import { addToCart, updateTCart, removeFromCart, singleItemRemoveFromCart, updateCart } from "../store/slices/cartSlices";
 import { useNavigate } from "react-router-dom";
 
 
@@ -12,8 +12,9 @@ const Cart = () => {
   const navigate = useNavigate();
   const handleQuantityChange = (item, newQuantity) => {
     const difference = newQuantity - item.quantity;
+    console.log(newQuantity)
     if (difference > 0) {
-      dispatch(addToCart({ item, quantity: difference }));
+      dispatch(updateTCart({ item, quantity: difference }));
         dispatch(updateCart());
     } else if (difference < 0) {
       for (let i = 0; i < Math.abs(difference); i++) {
